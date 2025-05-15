@@ -118,10 +118,9 @@ export default function Home() {
   */
 
   /*Smooth scroll*/
-  if (useSmoothScroll) {
-    useLayoutEffect(() => {
-      gsap.registerPlugin(ScrollTrigger, ScrollSmoother);
 
+  useLayoutEffect(() => {
+    if (useSmoothScroll) {
       const smoother = ScrollSmoother.create({
         wrapper: '#smooth-wrapper',
         content: '#smooth-content',
@@ -132,8 +131,8 @@ export default function Home() {
       return () => {
         smoother.kill();
       };
-    }, []);
-  }
+    }
+  }, []);
 
   /*With "scrub"*/
   useEffect(() => {
@@ -367,9 +366,6 @@ export default function Home() {
     const bug = bugRef.current;
     const pathLength = path.getTotalLength();
 
-    let rotateTo = gsap.quickTo(bugRef.current, "rotation"),
-      prevDirection = 0;
-
     gsap.set(bugRef.current, { transformOrigin: "50% 50%" });
 
     gsap.to(bug, {
@@ -379,12 +375,6 @@ export default function Home() {
         end: `+=${pathLength}`,
         scrub: 0.5,
         markers: false,
-        onUpdate: self => {
-          if (prevDirection !== self.direction) {
-            rotateTo(self.direction === 1 ? 0 : -180);
-            prevDirection = self.direction;
-          }
-        }
       },
       ease: 'none',
       immediateRender: true,
@@ -402,7 +392,7 @@ export default function Home() {
       <div id="smooth-content">
         <section className={styles.mainSection}>
           <div className={styles.section}>
-            <h1>GSAP Animation with "scrub"</h1>
+            <h1>GSAP Animation with &quot;scrub&quot;</h1>
 
             <div className={styles.cardsWrapper1}>
               {cardIds1.map((id) => (
@@ -419,7 +409,7 @@ export default function Home() {
           </div>
 
           <div className={styles.section}>
-            <h1>GSAP Animation without "scrub"</h1>
+            <h1>GSAP Animation without &quot;scrub&quot;</h1>
 
             <div className={styles.cardsWrapper1}>
               {cardIds2.map((id) => (
@@ -518,7 +508,7 @@ export default function Home() {
                     <path d="M0 93L0 2738H1099.7L1099.7 93H0Z" fill="white" />
                   </mask>
                   <g mask="url(#mask0_2001_351)">
-                    <path id="motionPath" 
+                    <path id="motionPath"
                       ref={pathRef}
                       d="M902.245 1751.04C902.247 1804.42 895.07 1855.29 880.42 1901.73C841.001 2026.67 753.659 2108 673.416 2171.07C661.252 2180.64 648.966 2190.07 636.654 2199.52C565.309 2254.3 491.534 2310.94 438.378 2396.72C350.156 2539.08 332.619 2754.2 395.732 2919.87L392.35 2922.3C328.53 2754.78 346.268 2537.26 435.47 2393.31C489.073 2306.82 563.151 2249.94 634.792 2194.94C647.091 2185.5 659.367 2176.07 671.522 2166.52C751.216 2103.87 837.944 2023.18 876.918 1899.64C922.698 1754.52 894.455 1565.01 801.348 1392.74C760.031 1316.29 710.375 1247.27 662.352 1180.52C618.843 1120.05 573.854 1057.52 535.073 989.51C488.525 907.884 386.032 694.965 439.544 481.309C458.166 406.95 493.779 342.974 528.219 281.106L532.645 273.147C569.97 206.008 604.712 139.399 619.673 62.7742C636.611 -23.9924 621.83 -111.825 582.003 -160.953L584.554 -164.859C625.438 -114.424 640.678 -24.5513 623.361 64.1372C608.22 141.684 573.246 208.76 535.681 276.333L531.253 284.292C496.998 345.828 461.575 409.465 443.154 483.02C390.258 694.206 491.917 905.316 538.079 986.271C576.726 1054.04 621.637 1116.47 665.068 1176.83C713.184 1243.71 762.937 1312.86 804.413 1389.61C868.646 1508.46 902.24 1635.58 902.245 1751.04Z"
                       fill="white"
